@@ -1,0 +1,85 @@
+{% extends 'base-others.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/personal-cabinet.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="big-block">
+        <div class="nav-link">
+            <h1>МОЙ КАБИНЕТ</h1>
+            <a href="{% url 'profile' %}">Персональные данные</a>
+            <a href="{% url 'order_cab' %}">История заказов</a>
+            <a href="{% url 'payment_cabinet' %}">Платежные данные</a>
+            <a href="{% url 'favorites_cabinet' %}">Избранное</a>
+            <a href="{% url 'logout' %}">Выход</a>
+        </div>
+        <div class="mini-block">
+            <div class="personal-info">
+                <h1>Персональные данные:</h1>
+                <p id="userFirstName">Имя: {{ user.first_name }}</p>
+                <p id="userLastName">Фамилия: {{ user.last_name }}</p>
+                <p id="userPhone">Телефон: {{ user.profile.phone }}</p>
+            </div>
+            <div class="buttons">
+                <button id="openPopup">Изменить</button>
+            </div>
+        </div>
+    </div>
+    <!-- Popup окно -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" id="closePopup">&times;</span>
+            <p class="popup-title">Изменить персональные данные</p>
+            <form id="updateProfileForm" class="form" method="post" action="{% url 'update_profile' %}">
+                {% csrf_token %}
+                <label for="id_first_name">Имя</label>
+                <input type="text" id="id_first_name" name="first_name" class="input-field" value="{{ user.first_name }}" required><br><br>
+                <label for="id_last_name">Фамилия</label>
+                <input type="text" id="id_last_name" name="last_name" class="input-field" value="{{ user.last_name }}" required><br><br>
+                <label for="id_phone">Телефон</label>
+                <input type="tel" id="id_phone" name="phone" class="input-field" value="{{ user.profile.phone }}" required><br><br>
+                <button class="button-sub" type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/personal-cabinet.js' %}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("openPopup").addEventListener("click", function() {
+        document.getElementById("popup").style.display = "block";
+    });
+
+    document.getElementById("closePopup").addEventListener("click", function() {
+        document.getElementById("popup").style.display = "none";
+    });
+
+    document.getElementById("updateProfileForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", this.action);
+        xhr.setRequestHeader("X-CSRFToken", document.querySelector('[name=csrfmiddlewaretoken]').value);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                var responseData = JSON.parse(xhr.responseText);
+                if (xhr.status === 200 && responseData.status === 'success') {
+                    // Обновление данных на странице
+                    document.getElementById("userFirstName").innerText = "Имя: " + formData.get("first_name");
+                    document.getElementById("userLastName").innerText = "Фамилия: " + formData.get("last_name");
+                    document.getElementById("userPhone").innerText = "Телефон: " + formData.get("phone");
+                    document.getElementById("popup").style.display = "none";
+                } else {
+                    // Обработка ошибки, если не удалось обновить данные
+                    console.error("Ошибка при обновлении данных", responseData.errors);
+                }
+            }
+        };
+        xhr.send(formData);
+    });
+});
+</script>
+{% endblock %}

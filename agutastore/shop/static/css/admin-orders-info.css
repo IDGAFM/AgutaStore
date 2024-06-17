@@ -1,0 +1,381 @@
+body { 
+    margin: 0;
+    font-family: "Raleway", sans-serif;
+}
+
+.container { 
+    margin-left: 23%;
+    margin-right: 25%;
+}
+
+.header { 
+    width: 100%;
+    height: 140px;
+    background-color: #000;
+}
+
+.header-line {
+    margin: 0 23%;
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.nav-item {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 24px;
+    margin-right: 80px;
+
+    transition: color 0.3s linear;
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%; /* Изменено на 0 */
+    height: 2px;
+    background-color: #ffffff;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-item:hover::after {
+    transform: scaleX(1);
+}
+
+.header-logo { 
+    margin-right: 80px;
+    padding-top: 4px;
+}
+
+.cart { 
+    margin-right: 30px;
+}
+
+.head-instagram{
+    margin-right: 30px;
+}
+
+#img-insta{
+    padding-top: 10px;
+}
+
+.user { 
+    margin-right: 30px;
+}
+
+.burger-menu {
+    display: none;
+}
+
+.burger-slide {
+    z-index: 2;
+    position: fixed;
+    display: none;
+    margin-top: 20px;
+    top: 0;
+    left: 0;
+    width: 60%; /* Изменено */
+    height: 100%; /* Изменено */
+    background-color: #000000;
+    padding: 20px;
+    border-radius: 10px;
+    opacity: 0; 
+    transform: translateX(-100%); 
+    transition: opacity 0.6s ease, transform 0.6s ease; 
+}
+
+.burger-slide.show {
+    opacity: 1; 
+    transform: translateX(0); 
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.nav-item-burger {
+    margin-top: 20px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 24px;
+    margin-right: 80px;
+    display: block;
+    transition: color 0.3s linear;
+}
+
+.block { 
+    display: block;
+}
+
+#burger {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.separator {
+    border-bottom: 1px solid #000;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.what-page {
+    font-size: 16px;
+    font-weight: 500;
+    color: #696969;
+    margin-top: 40px;
+}
+
+.client-info { 
+    width: 390px;
+    border: 1px solid #000;
+}
+
+.block-one {
+    display: flex;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.block-two { 
+    display: flex;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.first-name-title, .last-name-title, 
+.phone-number, .first-name-client, 
+.last-name-client {
+    width: 120px;
+    text-align: center;
+}
+
+.phone-number-client { 
+    text-align: center;
+    width: 140px;
+}
+
+.order-info { 
+    border: 1px solid #000;
+    margin-top: 40px;
+}
+
+.order-info::-webkit-scrollbar {
+    display: none;
+}
+
+.block-one-oi {
+    display: flex;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.block-two-oi { 
+    display: flex;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.description, .status {
+    width: 250px;
+    text-align: center;
+}
+
+.status img {
+    width: 22px;
+    margin-bottom: -5px;
+    cursor: pointer;
+}
+
+.brand, .sizes,
+.quantity, .price {
+    width: 120px;
+    text-align: center;
+}
+
+.desc-desc, .status-desc {
+    width: 250px;
+    text-align: center;
+}
+
+.brand-desc, .price-desc,
+.size-desc,  .quantity-desc { 
+    width: 120px;
+    text-align: center;
+}
+
+.last-block {
+    margin-bottom: 10px;
+}
+
+.popup-container {
+    position: absolute;
+    margin-top: 25px;
+    left: 65%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    border: none;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: none;
+    z-index: 1000; 
+}
+
+.popup-container a {
+    text-decoration: none;
+    color: #000;
+    display: block;
+    text-align: left;
+    margin-top: 5px;
+    position: relative;
+}
+
+.popup-container a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 20%;
+    height: 2px;
+    background-color: #000000;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.popup-container a:hover::after {
+    transform: scaleX(1);
+}
+
+.adres-order {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.adres-order span {
+    font-weight: 700;
+}
+
+.review{ 
+    margin-top: 50px;
+}
+
+.review-title { 
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.review-form { 
+    margin-top: 10px;
+}
+
+.review-input { 
+    width: 300px;
+    height: 100px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    padding: 5px 5px;
+    font-size: 15px;
+    resize: none;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+}
+
+.review-btn button {
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 40px;
+    border: 1px solid #000;
+    background-color: #fff;
+    cursor: pointer;
+    padding: 8px 15px;
+    transition: background-color 0.3s linear, color 0.2s linear;
+}
+
+.review-btn button:hover {
+    background-color: #000000;
+    color: #fff
+}
+
+.review-people { 
+    margin-top: 30px;
+}
+
+.peop-t { 
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.peop-desc {
+    margin-top: 8px;
+    font-weight: 500;
+} 
+
+.footer {
+    width: 100%;
+    margin-top: 200px;
+}
+
+.footer-image {
+    width: 100%;
+}
+
+#footer-img{
+    width: 100%;
+}
+
+.footer-menu {
+    background-color: #000000;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.97), rgba(0, 0, 0, 1)); 
+    margin-top: -10px;
+}
+
+.number, .email {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-left: 23%;
+}
+
+.policy {
+    text-align: center;
+    margin-top: 100px;
+    padding-bottom: 30px;
+}
+
+#policy-link {
+    text-decoration: none;
+    color: #616161;
+}
+
+@media (max-width: 1440px) { 
+    .container { 
+        margin-left: 15%;
+        margin-right: 18%;
+    }
+
+    .number, .email { 
+        margin-left: 15%;
+    }
+}

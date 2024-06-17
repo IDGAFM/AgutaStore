@@ -1,0 +1,137 @@
+{% extends 'base-others.html' %}
+{% load static %}
+
+{% block title %}Информация о заказе{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/admin-orders-info.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="what-page">
+        Главная / Заказы
+    </div>
+</div>
+
+<div class="container">
+    <div class="order-number">
+        <h2>Заказ №{{ order.order_number }}</h2>
+    </div>
+    <div class="client-info">
+        <div class="block-one">
+            <div class="first-name-title">Имя</div>
+            <div class="last-name-title">Фамилия</div>
+            <div class="phone-number">Номер</div>
+        </div>
+        <div class="separator"></div>
+        <div class="block-two">
+            <div class="first-name-client">{{ order.user.first_name }}</div>
+            <div class="last-name-client">{{ order.user.last_name }}</div>
+            <div class="phone-number-client">{{ user.profile.phone }}</div>
+        </div>
+    </div>
+    <div class="order-info">
+        <div class="block-one-oi">
+            <div class="brand">Бренд</div>
+            <div class="description">Описание</div>
+            <div class="sizes">Размер</div>
+            <div class="quantity">Количество</div>
+            <div class="price">Цена</div>
+            <div class="status">
+                Статус: <span id="status-display-{{ order.id }}">{{ order.get_status_display }}</span>
+                <img src="{% static 'image/admin-icon.png' %}" alt="#" class="status-img" onclick="toggleStatusPopup({{ order.id }})">
+                <div class="popup-container" id="statusPopup{{ order.id }}">
+                    {% for key, value in order.ORDER_STATUS_CHOICES %}
+                        <a href="#" onclick="updateOrderStatus({{ order.id }}, '{{ key }}')">{{ value }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="separator"></div>
+        {% for item in order.paid_items.all %}
+        <div class="block-two-oi">
+            <div class="brand-desc">{{ item.cloth.brand.first.name }}</div>  <!-- Assuming a cloth has a single brand -->
+            <div class="desc-desc">{{ item.cloth.title }}</div>
+            <div class="size-desc">{{ item.size }}</div>
+            <div class="quantity-desc">{{ item.quantity }}</div>
+            <div class="price-desc">{{ item.price }}</div>
+            <div class="status-desc">{{ order.get_status_display }}</div>
+        </div>
+        <div class="separator"></div>
+        {% endfor %}
+    </div>
+    <div class="adres-order">
+        <span> Адрес доставки:</span> {{ order.city }}, {{ order.street }} {{ order.home }} <br>
+        Индекс: {{ order.index }}
+    </div>
+    <div class="review">
+        <form method="post" action="{% url 'add_review' order_id=order.id %}">
+            {% csrf_token %}
+            <div class="review-form">
+                <textarea id="review" name="review" class="review-input" placeholder="Напишите заметку...">{{ form.review.value }}</textarea>
+            </div>
+            <div class="review-btn">
+                <button type="submit" id="comlete-btn">Добавить заметку</button>
+            </div>
+        </form>
+    </div>
+    <div class="review-people">
+        {% for review in reviews %}
+        <div class="people">
+            <div class="peop-t">{{ review.user.get_full_name }} - {{ review.created_at|date:"d.m.Y" }}</div>
+            <div class="peop-desc">{{ review.review }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/admin-orders.js' %}"></script>
+<script>
+    function toggleStatusPopup(orderId) {
+        const popup = document.getElementById('statusPopup' + orderId);
+        popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function updateOrderStatus(orderId, status) {
+        fetch(`/update-order-status/${orderId}/${status}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('status-display-' + orderId).innerText = data.new_status;
+                toggleStatusPopup(orderId);
+                alert('Статус заказа успешно обновлен');
+            } else {
+                alert('Ошибка при обновлении статуса заказа: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Ошибка при обновлении статуса заказа: ' + error.message);
+        });
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+{% endblock %}

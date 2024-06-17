@@ -1,0 +1,106 @@
+{% extends 'base-others.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/payment-cabinet.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="big-block">
+        <div class="nav-link">
+            <h1>МОЙ КАБИНЕТ</h1>
+            <a href="{% url 'profile' %}">Персональные данные</a>
+            <a href="{% url 'order_cab' %}">История заказов</a>
+            <a href="{% url 'payment_cabinet' %}">Платежные данные</a>
+            <a href="{% url 'favorites_cabinet' %}">Избранное</a>
+            <a href="{% url 'logout' %}">Выход</a>
+        </div>
+
+        <div class="mini-block">
+            <div class="personal-info">
+                <h1>Платежные данные:</h1>
+                {% if cards %}
+                    {% for card in cards %}
+                        <p>{{ card.card_type }} {{ card.card_number|slice:":4" }}************ <span class="delete-card" data-card-id="{{ card.id }}">&times;</span></p>
+                    {% endfor %}
+                {% else %}
+                    <p>Нет сохраненных карт</p>
+                {% endif %}
+            </div>
+
+            <div class="buttons">
+                <button id="openPopup">Добавить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="popup" class="popup" style="display:none;">
+    <div class="popup-content">
+        <span class="close-popup" id="closePopup">&times;</span>
+        <h2>ДАННЫЕ КАРТЫ</h2>
+        <form id="addCardForm" method="post" action="{% url 'payment_cabinet' %}">
+            {% csrf_token %}
+            <div class="card-details">
+                <div class="card-num">
+                    <p>Номер карты</p>
+                    <input type="text" name="card_number" required>
+                </div>
+                <div class="center-block">
+                    <div class="date-card">
+                        <p>Срок действия</p>
+                        <input type="text" name="expiry_date" placeholder="MM/YY" required>
+                    </div>
+                    <div class="cvv-card">
+                        <p>CCV \ CVV</p>
+                        <input type="text" name="cvv" required>
+                    </div>
+                </div>
+                <div class="name-card">
+                    <p>Владелец Карты</p>
+                    <input type="text" name="card_holder" value="{{ user.first_name }} {{ user.last_name }}" required>
+                </div>
+            </div>
+            <div class="button-pay">
+                <button type="submit">Добавить</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("openPopup").addEventListener("click", function() {
+        document.getElementById("popup").style.display = "block";
+    });
+
+    document.getElementById("closePopup").addEventListener("click", function() {
+        document.getElementById("popup").style.display = "none";
+    });
+
+    document.querySelectorAll(".delete-card").forEach(function(element) {
+        element.addEventListener("click", function() {
+            const cardId = this.getAttribute("data-card-id");
+            if (confirm("Вы уверены, что хотите удалить эту карту?")) {
+                fetch("{% url 'delete_card' %}", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ "card_id": cardId })
+                }).then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    } else {
+                        alert("Ошибка при удалении карты.");
+                    }
+                });
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

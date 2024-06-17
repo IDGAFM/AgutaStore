@@ -1,0 +1,113 @@
+{% extends 'base-others.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/order-cabinet.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="big-block">
+        <div class="nav-link">
+            <h1>МОЙ КАБИНЕТ</h1>
+            <a href="{% url 'profile' %}">Персональные данные</a>
+            <a href="{% url 'order_cab' %}">История заказов</a>
+            <a href="{% url 'payment_cabinet' %}">Платежные данные</a>
+            <a href="{% url 'favorites_cabinet' %}">Избранное</a>
+            <a href="{% url 'logout' %}">Выход</a>
+        </div>
+
+        {% if is_admin %}
+        <div class="cart-none">
+            <h1>Страница не доступна для администраторов!</h1>
+            <div class="buttons">
+                <a href="{% url 'home' %}">
+                    <button id="complete-btn">Вернуться на главную страницу</button>
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <div class="order-history">
+            <h1 class="history-title">История заказов:</h1>
+
+
+            {% for order in orders %}
+            <div class="order">
+                <div class="separator"></div>
+                <div class="block-one">
+                    <div class="order-number">
+                        Заказ №{{ order.order_number }}
+                    </div>
+                    <div class="order-date">
+                        Дата: {{ order.order_date|date:"d-m-Y" }}
+                    </div>
+                    <div class="status">
+                        Статус: <span>{{ order.get_status_display }}</span>
+                    </div>
+                </div>
+                <div class="block-two">
+                    <div class="position-product">
+                        Позиций: {{ order.quantity }} <br>
+                        Товаров: {{ order.total_items }}
+                    </div>
+                    <div class="client-info">
+                        Покупатель: {{ order.user.first_name }} {{ order.user.last_name }} <br>
+                        Сумма: {{ order.total_amount }} ₸
+                    </div>
+                    <div class="buttons">
+                        <button class="repeat-order" onclick="repeatOrder({{ order.id }})">
+                            Повторить заказ
+                        </button>
+                    </div>
+                </div>
+                <div class="separator"></div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/main.js' %}"></script>
+<script>
+    function repeatOrder(orderId) {
+        fetch(`/repeat-order/${orderId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Заказ успешно повторен');
+                location.reload();
+            } else {
+                alert('Ошибка при повторе заказа: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Ошибка при повторе заказа: ' + error.message);
+        });
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+{% endblock %}

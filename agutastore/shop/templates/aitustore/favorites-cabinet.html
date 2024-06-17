@@ -1,0 +1,77 @@
+{% extends 'base-others.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/favorites-cabinet.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="big-block">
+        <div class="nav-link">
+            <h1>МОЙ КАБИНЕТ</h1>
+            <a href="{% url 'profile' %}">Персональные данные</a>
+            <a href="{% url 'order_cab' %}">История заказов</a>
+            <a href="{% url 'payment_cabinet' %}">Платежные данные</a>
+            <a href="{% url 'favorites_cabinet' %}">Избранное</a>
+            <a href="{% url 'logout' %}">Выход</a>
+        </div>
+
+        <div class="shop-product">
+            <h1>Избранное:</h1>
+
+            {% for favorite in favorites %}
+            <div class="separator"></div>
+                <div class="product">
+                    <div class="images">
+                        <img src="{{ favorite.cloth.mainPoster.url }}" alt="">
+                    </div>
+
+                    <div class="button-close">
+                        <button data-id="{{ favorite.cloth.id }}" class="remove-favorite">&#x2715;</button>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-title">
+                            <a href="{% url 'product' favorite.cloth.url %}">
+                                {{ favorite.cloth.title }}
+                            </a>
+                        </div>
+    
+                        <div class="size">
+                            Размер: {{ favorite.cloth.size }}
+                        </div>
+    
+                        <div class="price">
+                            {{ favorite.cloth.price }}₸
+                        </div>
+                    </div>
+                </div>
+                <div class="separator"></div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+document.querySelectorAll('.remove-favorite').forEach(button => {
+    button.addEventListener('click', function() {
+        const clothId = this.getAttribute('data-id');
+        fetch("{% url 'toggle_favorite' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'cloth_id=' + clothId
+        }).then(response => response.json())
+        .then(data => {
+            if (!data.added) {
+                this.closest('.product').remove();
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

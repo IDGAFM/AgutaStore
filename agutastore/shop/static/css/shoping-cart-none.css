@@ -1,0 +1,235 @@
+body { 
+    margin: 0;
+    font-family: "Raleway", sans-serif;
+}
+
+.header { 
+    width: 100%;
+    height: 140px;
+    background-color: #000;
+}
+
+.header-line {
+    margin: 0 23%;
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.nav-item {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 24px;
+    margin-right: 80px;
+
+    transition: color 0.3s linear;
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%; /* Изменено на 0 */
+    height: 2px;
+    background-color: #ffffff;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-item:hover::after {
+    transform: scaleX(1);
+}
+
+.header-logo { 
+    margin-right: 80px;
+    padding-top: 4px;
+}
+
+.cart { 
+    margin-right: 30px;
+}
+
+.head-instagram{
+    margin-right: 30px;
+}
+
+#img-insta{
+    padding-top: 10px;
+}
+
+.user { 
+    margin-right: 30px;
+}
+
+.burger-menu {
+    display: none;
+}
+
+.burger-slide {
+    z-index: 2;
+    position: fixed;
+    display: none;
+    margin-top: 20px;
+    top: 0;
+    left: 0;
+    width: 60%; /* Изменено */
+    height: 100%; /* Изменено */
+    background-color: #000000;
+    padding: 20px;
+    border-radius: 10px;
+    opacity: 0; 
+    transform: translateX(-100%); 
+    transition: opacity 0.6s ease, transform 0.6s ease; 
+}
+
+.burger-slide.show {
+    opacity: 1; 
+    transform: translateX(0); 
+}
+
+.footer {
+    width: 100%;
+    margin-top: 200px;
+}
+
+.footer-image {
+    width: 100%;
+}
+
+#footer-img{
+    width: 100%;
+}
+
+.footer-menu {
+    background-color: #000000;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.97), rgba(0, 0, 0, 1)); 
+    margin-top: -10px;
+}
+
+.number, .email {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-left: 23%;
+}
+
+.policy {
+    text-align: center;
+    margin-top: 100px;
+    padding-bottom: 30px;
+}
+
+#policy-link {
+    text-decoration: none;
+    color: #616161;
+}
+
+.container {
+    margin-left: 23%;
+    margin-right: 25%;
+    margin-top: 20px;
+}
+
+.nav-info { 
+    font-size: 16px;
+    margin-top: 20px;
+    color: #4e4e4e;
+}
+
+.buttons button {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 10px;
+    border: 1px solid #000;
+    background-color: #fff;
+    cursor: pointer;
+    padding: 7px 35px;
+    transition: background-color 0.3s linear, color 0.2s linear;
+}
+
+.buttons button:hover {
+    background-color: #000000;
+    color: #fff
+}
+
+@media (max-width: 1440px) {
+    .container { 
+        margin-left: 15.5%;
+        margin-right: 18%;
+    }
+
+    .button-close {
+        left: 81%;
+    }
+
+    .number, .email {
+        margin-left: 15.5%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .container { 
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+
+    .button-close {
+        left: 95%;
+    }
+
+    .number, .email {
+        margin-left: 3%;
+    }
+
+    .header {
+        height: 100px;
+    }
+
+    .nav-item, .cart, .head-instagram, .user {
+        display: none;
+    }
+    
+    .head-logotype {
+        display: block;
+        margin: auto;
+    }
+    
+    .header-line {
+        padding-top: 30px;
+        margin: 0 3%;
+    }
+    
+    .burger-menu {
+        display: block;
+    }
+}
+
+@media (max-width: 450px) {
+    .container { 
+        margin-left: 4%;
+        margin-right: 4%;
+    }
+
+    .product { 
+        display: block;
+    }
+
+    .button-close {
+        left: 93%;
+        margin-top: -138%;
+    }
+
+    .product-info { 
+        margin-left: 0px;
+    }
+
+    .images img { 
+        width: 370px;
+    }
+
+}
+

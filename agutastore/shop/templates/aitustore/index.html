@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock %}
+{% block header-down %}
+
+            <!-- Текст по середине хедера -->
+            <div class="header-down">
+                <div class="header-title">
+                    AGUTATORE
+                </div>
+
+                <div class="header-subtitle">
+                    Мир стиля от Китая до США Где уникальность встречает доступность.
+                </div>
+            </div>
+{% endblock %}
+
+
+    {% block content %}
+
+    <!-- Черная карточка справа снизу -->
+    <div class="card">
+        <div class="card-content">
+            <div class="card-image">
+                <img class="card-img" src="{% static 'image/vector.png' %}" alt="">
+            </div>
+            <div class="card-text">
+                <p>Отличное качество</p>
+            </div>
+        </div>
+
+        <div class="card-content">
+            <div class="card-image">
+                <img class="card-img" src="{% static 'image/vector.png' %}" alt="">
+            </div>
+            <div class="card-text">
+                <p>Приятный материал</p>
+            </div>
+        </div>
+
+        <div class="card-content">
+            <div class="card-image">
+                <img class="card-img" src="{% static 'image/vector.png' %}" alt="">
+            </div>
+            <div class="card-text">
+                <p>Доставка по всему Казахстану</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Информация о компании ABOUT -->
+    <div class="about">
+        <div class="container">
+            <div class="about-holder">
+                <div class="about-img">
+                    <img src="{% static 'image/history-img.png' %}" alt="">
+                </div>
+
+                <div class="about-info">
+                    <img src="{% static 'image/double-vector.png' %}" alt="">
+
+                    <p id="about-text">
+                        agutastore — Стиль без границ.
+                        От уличной культуры Китая до
+                        оригинальных трендов США - у нас всё для тех,
+                        кто ценит свободу выражения и
+                        живёт в мире без предрассудков.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Блок с надписью НОВИНКИ -->
+    <div class="novinki">
+        <div class="container">
+            <div class="new">
+                <div class="new-text">
+                    <p>
+                        НОВИНКИ
+                    </p>
+                </div>
+
+                <div class="new-img">
+                    <img src="{% static 'image/new.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Карточки товаров новинок -->
+    <div class="karta-new">
+        <div class="container">
+
+            <div class="karta-new">
+        {% for new in newThing %}
+                <div class="karta-one">
+                    <img class="karta-img1" src="{{ new.mainPoster.url }}" alt="">
+
+                    <div class="karta-tb">
+                        <p class="karta-title" >{{ new.title }}” </p>
+                <a href="{{ new.get_absolute_url }}">
+
+                        <button class="karta-btn" >Детали</button>
+                </a>
+
+                    </div>
+                </div>
+        {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- Отдельная карточка с бейсболкой -->
+    <div class="karta-skidka">
+        <div class="skidka-img">
+            <img id="sk-img" src="{% static 'image/ShotBlack.png' %}" alt="">
+        </div>
+
+        <div class="skidka-title">
+            Бейсболка Shot Black <br><br>
+            <button class="skidka-btn" >в корзину</button>
+            <span>12.000 ₸</span>
+        </div>
+    </div>
+    {% endblock %}
+

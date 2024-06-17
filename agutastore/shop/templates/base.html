@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap" rel="stylesheet">
+    <title>Каталог</title>
+    {% block css %}{% endblock %}
+</head>
+<body>
+        <div class="header"> <!-- Менюшка -->
+        <div class="container">
+            <!-- Элементы меню лого и тд -->
+            <div class="header-line">
+                <div class="burger-menu">
+                    <button id="burger">
+                        <img class="burger-img" src="{% static 'image/burger_menu.png' %}" alt="">
+                    </button>
+
+                    <div id="b-menu" class="burger-slide disp">
+                        <button class="close-btn" onclick="closeMenu()">&#10006;</button>
+                        <a class="nav-item-burger block" href="{% url 'catalog' %}?category=male">МУЖСКОЕ</a>
+                        <a class="nav-item-burger block" href="{% url 'catalog' %}?category=female">ЖЕНСКОЕ</a>
+                        <a class="nav-item-burger block" href="{% url 'orders' %}">ЗАКАЗЫ</a>
+                        <a class="nav-item-burger block" href="{% url 'basket' %}">КОРЗИНА</a>
+                        <a class="nav-item-burger block" href="https://www.instagram.com/agutastore?igsh=Z293d2dsbWRmZDR5">ИНСТАГРАМ</a>
+                        <div class="none">
+                            {% if user.is_authenticated %}
+                                <a class="nav-item-burger block" href="{% url 'profile' %}">
+                                    КАБИНЕТ
+                                </a>
+                            {% else %}
+                                <a class="nav-item-burger block" href="{% url 'login' %}">
+                                    КАБИНЕТ
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                    <a class="nav-item" href="{% url 'catalog' %}?category=male">МУЖСКОЕ</a>
+                    <a class="nav-item" href="{% url 'catalog' %}?category=female">ЖЕНСКОЕ</a>
+
+
+                <div class="header-logo">
+                    <a href="{% url 'home' %}">
+                        <img id="logo-head" src="{% static 'image/logo.png' %}" alt="">
+                    </a>
+                </div>
+
+                    <a class="nav-item" href="{% url 'orders' %}">ЗАКАЗЫ</a>
+
+                <div class="cart">
+                    <a href="{% url 'basket' %}">
+                        <img src="{% static 'image/cart.png' %}" alt="">
+                    </a>
+                </div>
+
+                <div class="head-instagram">
+                    <a href="https://www.instagram.com/agutastore?igsh=Z293d2dsbWRmZDR5">
+                        <img id="img-insta" src="{% static 'image/instagram.png' %}" alt="">
+                    </a>
+                </div>
+
+                <div class="user">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'profile' %}">
+                            <img src="{% static 'image/User.png' %}" alt="">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}">
+                            <img src="{% static 'image/User.png' %}" alt="">
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+
+            {% block header-down %} {% endblock %}
+        </div>
+    </div>
+
+
+           {% block content %} {% endblock %}
+
+
+        <!-- Подвал -->
+        <div class="footer">
+        <div class="footer-image">
+            <img id="footer-img" src="{% static 'image/FooterBG.png' %}" alt="">
+        </div>
+        <div class="footer-menu">
+            <div class="container">
+                <!-- Элементы меню лого и тд -->
+                <div class="header-line">
+
+                        <a class="nav-item" href="{% url 'catalog' %}">МУЖСКОЕ</a>
+                        <a class="nav-item" href="{% url 'catalog' %}">ЖЕНСКОЕ</a>
+
+
+                    <div class="header-logo">
+                        <a href="../index.html">
+                            <img id="logo-head" src="{% static 'image/logo.png' %}" alt="">
+                        </a>
+                    </div>
+
+                        <a class="nav-item" href="../orders.html">ЗАКАЗЫ</a>
+
+                    <div class="cart">
+                        <a href="#">
+                            <img src="{% static 'image/cart.png' %}" alt="">
+                        </a>
+                    </div>
+
+                    <div class="head-instagram">
+                        <a href="https://www.instagram.com/agutastore?igsh=Z293d2dsbWRmZDR5">
+                            <img id="img-insta" src="{% static 'image/instagram.png' %}" alt="">
+                        </a>
+                    </div>
+
+                    <div class="user">
+                        <a href="#">
+                            <img src="{% static 'image/User.png' %}" alt="">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="number">
+                    +7 (708) 289 32 46
+                </div>
+
+                <div class="email">
+                    diasoyazov@gmail.com
+                </div>
+
+                <div class="policy">
+                    <a id="policy-link" href="#">Политика конфиденциальности и Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="{% static 'js/catalog.js' %}"></script>
+
+</body>
+</html>

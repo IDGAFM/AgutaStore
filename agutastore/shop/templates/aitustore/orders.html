@@ -1,0 +1,340 @@
+{% extends 'base-others.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/orders.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="what-page">
+            Заказы
+        </div>
+    </div>
+
+    {% if user.is_staff %}
+    <div class="catalog-title">
+        <div class="container">
+
+
+            <div class="search">
+                <form action="" method="get">
+                    <input type="hidden" name="category" value="{{ selected_category }}">
+                    <input type="text" placeholder="Поиск товаров" name="search" value="{{ search_query }}">
+                    <button type="submit"><p>Поиск</p></button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="filter">
+        <div class="container">
+            <div class="filtration">
+                <div class="price">
+                    <button id="price-btn">
+                        <p>Дата <span>&#709;</span></p>
+                    </button>
+                </div>
+
+                    <div id="price-filter" class="filter-window">
+                    <form method="get" action="">
+                        <input type="hidden" name="search" value="{{ search_query }}">
+                        <label for="date_from">Дата от:</label>
+                        <input type="date" name="date_from" id="date_from" value="{{ date_from }}">
+                        <label for="date_to">Дата до:</label>
+                        <input type="date" name="date_to" id="date_to" value="{{ date_to }}">
+                        <button type="submit">Применить</button>
+                    </form>
+                    </div>
+
+
+                <div class="filter-delete">
+                    <button id="delete-btn" onclick="clearFilter()">
+                        <p>Очистить фильтр <span>&times;</span></p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for order in orders %}
+    <div class="orders">
+        <div class="container">
+            <div class="order">
+                <div class="separator"></div>
+                <div class="block-one">
+                    <div class="order-number">
+                        Заказ №{{ order.order_number }}
+                    </div>
+                    <div class="order-date">
+                        Дата: {{ order.order_date|date:"d-m-Y" }}
+                    </div>
+                    <div class="status">
+                        Статус: <span id="status-display-{{ order.id }}">{{ order.get_status_display }}</span>
+                        <img src="{% static 'image/admin-icon.png' %}" alt="#" class="status-img" onclick="toggleStatusPopup({{ order.id }})">
+                        <div class="popup-container" id="statusPopup{{ order.id }}">
+                            {% for key, value in order.ORDER_STATUS_CHOICES %}
+                                <a href="#" onclick="updateOrderStatus({{ order.id }}, '{{ key }}')">{{ value }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="block-two">
+                    <div class="position-product">
+                        Позиций: {{ order.quantity }} <br>
+                        Товаров: {{ order.total_items }}
+                    </div>
+                    <div class="client-info">
+                        Покупатель: {{ order.user.first_name }} {{ order.user.last_name }} <br>
+                        Сумма: {{ order.total_amount }} ₸
+                    </div>
+                    <div class="buttons">
+                        <a href="{% url 'order_detail' order.id %}"><button class="detail" data-order-id="{{ order.id }}">
+                            Детали заказа
+                        </button></a>
+                    </div>
+                </div>
+                <div class="separator"></div>
+            </div>
+            <!-- Modal for order details -->
+            <div class="modal-overlay"></div>
+            <div class="modal" id="modal-{{ order.id }}">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal({{ order.id }})">&times;</span>
+                    <div class="details-orders">
+                        Детали заказа
+                    </div>
+                    <div class="separator"></div>
+                    {% for item in order.paid_items.all %}
+                        <div class="det-info">
+                            <div class="brand-name">
+                                {{ item.cloth.title }} {{ item.size }} <br>
+                                <span>{{ item.price }} ₸</span>
+                            </div>
+                            <div class="quantity">
+                                Количество: {{ item.quantity }}
+                            </div>
+                        </div>
+                        <div class="separator"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    {% for order in orders %}
+    <div class="orders">
+        <div class="container">
+            <div class="order">
+                <div class="separator"></div>
+                <div class="block-one">
+                    <div class="order-number">
+                        Заказ №{{ order.order_number }}
+                    </div>
+                    <div class="order-date">
+                        Дата: {{ order.order_date|date:"d-m-Y" }}
+                    </div>
+                    <div class="status">
+                        Статус: <span>{{ order.get_status_display }}</span>
+                    </div>
+                </div>
+                <div class="block-two">
+                    <div class="position-product">
+                        Позиций: {{ order.quantity }} <br>
+                        Товаров: {{ order.total_items }}
+                    </div>
+                    <div class="client-info">
+                        Покупатель: {{ order.user.first_name }} {{ order.user.last_name }} <br>
+                        Сумма: {{ order.total_amount }} ₸
+                    </div>
+                    <div class="buttons">
+                        <button class="detail" data-order-id="{{ order.id }}">
+                            Детали заказа
+                        </button>
+                        <button class="repeat-order" data-order-id="{{ order.id }}">
+                            Повторить заказ
+                        </button>
+                    </div>
+                </div>
+                <div class="separator"></div>
+            </div>
+            <!-- Modal for order details -->
+            <div class="modal-overlay"></div>
+            <div class="modal" id="modal-{{ order.id }}">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal({{ order.id }})">&times;</span>
+                    <div class="details-orders">
+                        Детали заказа
+                    </div>
+                    <div class="separator"></div>
+                    {% for item in order.paid_items.all %}
+                        <div class="det-info">
+                            <div class="brand-name">
+                                {{ item.cloth.title }}, Размер: {{ item.size }} <br>
+                                <span>Сумма: {{ item.price }} ₸</span>
+                            </div>
+                            <div class="quantity">
+                                Количество: {{ item.quantity }}
+                            </div>
+                        </div>
+                        <div class="separator"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/catalog.js' %}"></script>
+
+<script>
+    function clearFilter() {
+    // Получаем текущий URL страницы
+    var currentUrl = window.location.href;
+
+    // Получаем текущую категорию из URL
+    var category = getUrlParameter('category');
+
+    // Формируем новый URL с текущей категорией
+    var newUrl = '';
+
+    // Проверяем, есть ли категория в URL
+    if (currentUrl.includes('category=')) {
+        newUrl = '?category=' + category;
+    } else {
+        newUrl = window.location.pathname + '?category=' + category;
+    }
+
+    // Переходим на страницу с новым URL
+    window.location.href = newUrl;
+}
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+
+    function showModal(orderId) {
+        document.getElementById('modal-' + orderId).style.display = 'block';
+        document.querySelector('.modal-overlay').style.display = 'block';
+    }
+
+    function closeModal(orderId) {
+        document.getElementById('modal-' + orderId).style.display = 'none';
+        document.querySelector('.modal-overlay').style.display = 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.detail').forEach(button => {
+            button.addEventListener('click', function() {
+                const orderId = this.getAttribute('data-order-id');
+                showModal(orderId);
+            });
+        });
+
+        document.querySelectorAll('.close').forEach(button => {
+            button.addEventListener('click', function() {
+                const orderId = this.closest('.modal').id.replace('modal-', '');
+                closeModal(orderId);
+            });
+        });
+
+        document.querySelectorAll('.repeat-order').forEach(button => {
+            button.addEventListener('click', function() {
+                const orderId = this.getAttribute('data-order-id');
+                repeatOrder(orderId);
+            });
+        });
+    });
+
+    function repeatOrder(orderId) {
+        fetch(`/repeat-order/${orderId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Заказ успешно повторен');
+                location.reload();
+            } else {
+                alert('Ошибка при повторе заказа: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Ошибка при повторе заказа: ' + error.message);
+        });
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+
+<script>
+    function toggleStatusPopup(orderId) {
+        const popup = document.getElementById('statusPopup' + orderId);
+        popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function updateOrderStatus(orderId, status) {
+        fetch(`/update-order-status/${orderId}/${status}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('status-display-' + orderId).innerText = data.new_status;
+                toggleStatusPopup(orderId);
+                alert('Статус заказа успешно обновлен');
+            } else {
+                alert('Ошибка при обновлении статуса заказа: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Ошибка при обновлении статуса заказа: ' + error.message);
+        });
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+
+{% endblock %}

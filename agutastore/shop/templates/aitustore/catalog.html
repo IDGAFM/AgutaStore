@@ -1,0 +1,210 @@
+{% extends 'base-others.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="links">
+        {% if selected_category == "male" %}
+            <a href="?category=male">Мужское</a>
+        {% elif selected_category == "female" %}
+            <a href="?category=female">Женское</a>
+        {% else %}
+            <a href="?category=">Общее</a>
+        {% endif %}
+        {% for product_type in product_types %}
+            <a href="?category={{ selected_category }}&product_type={{ product_type.url }}">{{ product_type.name }}</a>
+        {% endfor %}
+    </div>
+
+
+</div>
+
+<div class="catalog">
+    <div class="container">
+<div class="nav-info">
+    <p>Главная / Каталог / {% if selected_category == "male" %}Мужское{% elif selected_category == "female" %}Женское{% else %}Общее{% endif %}</p>
+</div>
+
+    </div>
+
+    <div class="catalog-title">
+        <div class="container">
+            {% if selected_category %}
+                {% if selected_category == "male" %}
+                    <div class="title">МУЖСКАЯ ОДЕЖДА
+                        {% if selected_product_type %}/ {{ selected_product_type.name }}{% endif %}
+                    </div>
+                {% elif selected_category == "female" %}
+                    <div class="title">ЖЕНСКАЯ ОДЕЖДА
+                        {% if selected_product_type %}/ {{ selected_product_type.name }}{% endif %}
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="title">ОДЕЖДА
+                    {% if selected_product_type %}/ {{ selected_product_type.name }}{% endif %}
+                </div>
+            {% endif %}
+
+
+            <div class="search">
+                <form action="" method="get">
+                    <input type="hidden" name="category" value="{{ selected_category }}">
+                    <input type="text" placeholder="Поиск товаров" name="search" value="{{ search_query }}">
+                    <button type="submit"><p>Поиск</p></button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="separator"></div>
+    </div>
+
+    <div class="filter">
+        <div class="container">
+            <div class="filtration">
+                <div class="price">
+                    <button id="price-btn">
+                        <p>Цена <span>&#709;</span></p>
+                    </button>
+                </div>
+
+                    <div id="price-filter" class="filter-window">
+                        <form method="get" action="">
+                            <input type="hidden" name="category" value="{{ selected_category }}">
+                            <p id="price-paf">Фильтрация цен:</p>
+                            <p id="Ot-Do">От</p>
+                            <input type="text" name="price_from" id="price-from" placeholder="100"> <br>
+                            <p id="Ot-Do">До</p>
+                            <input type="text" name="price_to" id="price-to" placeholder="999 999"> <br>
+                            <button type="submit" id="apply-price">Применить</button>
+                        </form>
+                    </div>
+
+
+                <div class="brand">
+                    <button id="brand-btn">
+                        <p>Бренд <span>&#709;</span></p>
+                    </button>
+                </div>
+
+                <div id="brand-filter" class="filter-window">
+                    <div class="filter-header">
+                        <h3>Фильтрация брендов:</h3>
+                    </div>
+                    <div class="filter-body">
+                        <form method="get" action="">
+                            <input type="hidden" name="category" value="{{ selected_category }}">
+                            {% for brand in brands %}
+                                <label><input type="checkbox" name="brand" value="{{ brand.pk }}"> {{ brand.name }}</label><br>
+                            {% endfor %}
+                            <button type="submit" id="apply-brand">Применить</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="brand-tovar">
+                    <button id="tovar-btn">
+                        <p>Вид товара <span>&#709;</span></p>
+                    </button>
+                </div>
+
+                <div id="tovar-filter" class="filter-window">
+                    <div class="filter-header">
+                        <h3>Фильтрация видов товаров</h3>
+                    </div>
+                    <div class="filter-body">
+                        <form method="get" action="">
+                            <input type="hidden" name="category" value="{{ selected_category }}">
+                            {% for type in product_types %}
+                                <label><input type="checkbox" name="productType" value="{{ type.pk }}"> {{ type.name }}</label><br>
+                            {% endfor %}
+                            <button type="submit" id="apply-product-type">Применить</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="filter-delete">
+                    <button id="delete-btn" onclick="clearFilter()">
+                        <p>Очистить фильтр <span>&times;</span></p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="separator"></div>
+    </div>
+
+    <div class="shop-cards">
+        <div class="container">
+            <div class="cards-cat">
+                {% for card in catalog %}
+                    <div class="card-one">
+                        <div class="card-img">
+                            <a href="{{ card.get_absolute_url }}">
+                                <img src="{{ card.mainPoster.url }}" alt="">
+                            </a>
+                        </div>
+
+                        <div class="card-title">
+                            <a href="{{ card.get_absolute_url }}"> {{ card.title }} </a>
+                            <span> {{ card.price }}₸</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+        <ul class="pagination">
+            {% for page in paginator.page_range %}
+                <li class="{% if page_obj.number == page %}active{% endif %}">
+                    <a href="?page={{ page }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+</div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/catalog.js' %}"></script>
+
+<script>
+function clearFilter() {
+    // Получаем текущий URL страницы
+    var currentUrl = window.location.href;
+
+    // Получаем текущую категорию из URL
+    var category = getUrlParameter('category');
+
+    // Формируем новый URL с текущей категорией
+    var newUrl = '';
+
+    // Проверяем, есть ли категория в URL
+    if (currentUrl.includes('category=')) {
+        newUrl = '?category=' + category;
+    } else {
+        newUrl = window.location.pathname + '?category=' + category;
+    }
+
+    // Переходим на страницу с новым URL
+    window.location.href = newUrl;
+}
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+</script>
+
+
+{% endblock %}

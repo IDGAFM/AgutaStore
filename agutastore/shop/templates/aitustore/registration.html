@@ -1,0 +1,46 @@
+{% extends 'base-others.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="big-block">
+        <div class="title">Регистрация</div>
+        <div class="container">
+            <form method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+                <div class="block-one">
+                    <div class="phone-number">
+                        <p>Email</p>
+                        {{ form.email }}
+                    </div>
+                    <div class="first-name">
+                        <p>Имя</p>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="last-name">
+                        <p>Фамилия</p>
+                        {{ form.last_name }}
+                    </div>
+                </div>
+                <div class="block-two">
+                    <div class="password">
+                        <p>Пароль</p>
+                        {{ form.password1 }}
+                    </div>
+                    <div class="password-repeat">
+                        <p>Повторите пароль</p>
+                        {{ form.password2 }}
+                    </div>
+                    <div class="buttons">
+                        <button type="submit" id="comlete-btn">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+                    </div>
+                    <div class="login">
+                        <p>Если у вас уже есть аккаунт. <a href="{% url 'login' %}">Войти</a></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+<script src="{% static 'js/main.js' %}"></script>

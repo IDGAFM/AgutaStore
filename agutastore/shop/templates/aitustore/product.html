@@ -1,0 +1,148 @@
+{% extends 'base-others.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/product.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="nav-info">
+        Главная / Мужское / {{ view.title }}
+    </div>
+
+    <div class="big-block">
+        <div class="block-one">
+            <div class="main-img">
+                <img id="mainImage" src="{{ view.mainPoster.url }}" alt="{{ view.title }}">
+            </div>
+
+            <div class="sec-img">
+                {% for shot in cloth_shots %}
+                <div class="image-one">
+                    <img src="{{ shot.image.url }}" alt="{{ shot.title }}" class="thumbnail">
+                </div>
+                {% endfor %}
+                {% for shot in cloth_shots %}
+                <div class="image-one">
+                    <img src="{{ shot.image1.url }}" alt="{{ shot.title }}" class="thumbnail">
+                </div>
+                {% endfor %}
+                {% for shot in cloth_shots %}
+                <div class="image-two">
+                    <img src="{{ shot.image2.url }}" alt="{{ shot.title }}" class="thumbnail">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="block-two">
+            <div class="title-heart">
+                <div class="title">{{ view.title }}</div>
+                <div class="favorite">
+                    <img id="image" src="{% if is_favorite %}{% static 'image/favorite-shaded.png' %}{% else %}{% static 'image/favorite.jpg' %}{% endif %}" alt="fav" data-id="{{ view.pk }}" data-favorite="{{ is_favorite }}" onclick="toggleFavorite(this)">
+                </div>
+            </div>
+
+            <div class="title-desc">
+                <div class="description">{{ view.descriptions }}</div>
+            </div>
+
+            <div class="sizes">
+                <div class="size-title">Выберите размер:</div>
+                <div class="button-group">
+                    <button class="toggle-button" onclick="toggleButton(this)">XS</button>
+                    <button class="toggle-button" onclick="toggleButton(this)">S</button>
+                    <button class="toggle-button" onclick="toggleButton(this)">M</button>
+                    <button class="toggle-button" onclick="toggleButton(this)">L</button>
+                    <button class="toggle-button" onclick="toggleButton(this)">XL</button>
+                    <button class="toggle-button" onclick="toggleButton(this)">XXL</button>
+                </div>
+            </div>
+
+            <div class="button-price">
+                <div class="buttons">
+                    <form id="add-to-cart-form" method="post" action="{% url 'add_to_cart' %}">
+                        {% csrf_token %}
+                        <input type="hidden" id="selected-size" name="size" value="">
+                        <input type="hidden" name="product_id" value="{{ view.pk }}">
+                        <button type="submit" id="add-to-cart-btn">В КОРЗИНУ</button>
+                    </form>
+                </div>
+                <div class="price">{{ view.price }}₸</div>
+            </div>
+
+            <div class="character">80% хлопок, 20% синтетика</div>
+        </div>
+    </div>
+
+    <div class="review-title">
+        кол-во отзывов: {{ view.review.count }} отзыва на {{ view.title }}
+    </div>
+
+    <div class="review">
+        <div class="textarea-btn">
+            <div class="review-form">
+                <form method="post" action="{% url 'add_review' pk=view.pk %}">
+                    {% csrf_token %}
+                    <textarea id="review" name="text" class="review-input" placeholder="Напишите здесь ваш отзыв..."></textarea>
+                    <button type="submit" id="comlete-btn">ОТПРАВИТЬ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="review-people">
+        {% for review in reviews %}
+        <div class="people">
+            <div class="peop-t">{{ review.user.first_name }} - {{ review.time|date:"d.m.Y" }}</div>
+            <div class="peop-desc">{{ review.text }}</div>
+        </div>
+        {% empty %}
+        <p>Пока нет отзывов.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/product.js' %}"></script>
+<script>
+function toggleFavorite(img) {
+    const clothId = img.getAttribute('data-id');
+    const isFavorite = img.getAttribute('data-favorite') === 'true';
+
+    fetch("{% url 'toggle_favorite' %}", {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'cloth_id=' + clothId
+    }).then(response => response.json())
+    .then(data => {
+        if (data.added) {
+            img.src = "{% static 'image/favorite-shaded.png' %}";
+            img.setAttribute('data-favorite', 'true');
+        } else {
+            img.src = "{% static 'image/favorite.jpg' %}";
+            img.setAttribute('data-favorite', 'false');
+        }
+    });
+}
+
+var isLoggedIn = {{ is_user_logged_in|yesno:"true,false" }};
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const mainImage = document.getElementById('mainImage');
+    const thumbnails = document.querySelectorAll('.thumbnail');
+
+    thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', function() {
+            const tempSrc = mainImage.src;
+            mainImage.src = this.src;
+            this.src = tempSrc;
+        });
+    });
+});
+</script>
+{% endblock %}

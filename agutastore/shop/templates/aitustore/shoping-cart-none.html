@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/shoping-cart-none.css">
+    <title>Корзина</title>
+</head>
+<body>
+    <div class="header">
+        <div class="burger-overlay"></div>
+
+        <div class="header-line">
+            <div class="burger-menu">
+                <button id="burger">
+                    <img class="burger-img" src="image/burger_menu.png" alt="">
+                </button>
+
+                <div id="b-menu" class="burger-slide disp">
+                    <button class="close-btn" onclick="closeMenu()">&#10006;</button>
+                    <a class="nav-item-burger block" href="catalog.html">МУЖСКОЕ</a>
+                    <a class="nav-item-burger block" href="catalog.html">ЖЕНСКОЕ</a>
+                    <a class="nav-item-burger block" href="orders.html">ЗАКАЗЫ</a>
+                    <a class="nav-item-burger block" href="shoping-cart.html">КОРЗИНА</a>
+                    <a class="nav-item-burger block" href="#">ИНСТАГРАМ</a>
+                    <a class="nav-item-burger block" href="#">КАБИНЕТ</a>
+                </div>
+            </div>
+
+                <a class="nav-item" href="catalog.html">МУЖСКОЕ</a>
+                <a class="nav-item" href="catalog.html">ЖЕНСКОЕ</a>
+            
+
+            <div class="header-logo head-logotype">
+                <a href="index.html">
+                    <img id="logo-head" src="image/logo.png" alt="">
+                </a>
+            </div>
+
+                <a class="nav-item" href="orders.html">ЗАКАЗЫ</a>
+            
+            <div class="cart">
+                <a href="#">
+                    <img src="image/cart.png" alt="">
+                </a>
+            </div>
+
+            <div class="head-instagram">
+                <a href="https://www.instagram.com/agutastore?igsh=Z293d2dsbWRmZDR5">
+                    <img id="img-insta" src="image/instagram.png" alt="">
+                </a>
+            </div>
+
+            <div class="user">
+                <a href="#">
+                    <img src="image/User.png" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="nav-info">
+            Главная \ Корзина
+        </div>
+
+        <div class="cart-none">
+
+            <h1>Здесь пусто!</h1>
+
+                <div class="buttons">
+                    <a href="index.html">
+                        <button id="comlete-btn" onclick="openPopup()">Вернуться на главную страницу</button>
+                    </a>
+                </div>
+            </div>
+    </div>
+
+    <div class="footer">
+
+        <div class="footer-image">
+            <img id="footer-img" src="image/FooterBG.png" alt="">
+        </div>
+
+        <div class="footer-menu">
+                <!-- Элементы меню лого и тд -->
+                <div class="header-line">
+                    
+                        <a class="nav-item" href="catalog.html">МУЖСКОЕ</a>
+                        <a class="nav-item" href="catalog.html">ЖЕНСКОЕ</a>
+                    
+                    <div class="header-logo">
+                        <a href="../index.html">
+                            <img id="logo-head" src="image/logo.png" alt="">
+                        </a>
+                    </div>
+
+                        <a class="nav-item" href="orders.html">ЗАКАЗЫ</a>
+                    
+                    <div class="cart">
+                        <a href="#">
+                            <img src="image/cart.png" alt="">
+                        </a>
+                    </div>
+
+                    <div class="head-instagram">
+                        <a href="https://www.instagram.com/agutastore?igsh=Z293d2dsbWRmZDR5">
+                            <img id="img-insta" src="image/instagram.png" alt="">
+                        </a>
+                    </div>
+
+                    <div class="user">
+                        <a href="#">
+                            <img src="image/User.png" alt="">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="number">
+                    +7 (708) 289 32 46
+                </div>
+
+                <div class="email">
+                    diasoyazov@gmail.com
+                </div>
+
+                <div class="policy">
+                    <a id="policy-link" href="#">Политика конфиденциальности и Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/shoping-cart.js"></script>
+</body>
+</html>

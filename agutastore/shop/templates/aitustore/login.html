@@ -1,0 +1,30 @@
+{% extends 'base-others.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="login">
+            <div class="title">ВХОД</div>
+            <form method="post" action="{% url 'login' %}">  <!-- Правильно указываем action для формы -->
+                {% csrf_token %}
+                <div class="phone-number">
+                    <p>Email</p>
+                    {{ form.username }}
+                </div>
+                <div class="password">
+                    <p>Пароль</p>
+                    {{ form.password }}
+                </div>
+                <div class="buttons">
+                    <button type="submit" id="comlete-btn">ВОЙТИ</button>
+                </div>
+            </form>
+            <div class="registration">
+                <p>Если у вас нету аккаунта. <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<script src="{% static 'js/main.js' %}"></script>

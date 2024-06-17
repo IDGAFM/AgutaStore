@@ -1,0 +1,168 @@
+[
+  [
+    {
+      "mediaEngineConnectionId": "Native-0",
+      "transport": {
+        "availableOutgoingBitrate": 1211891,
+        "ping": 52,
+        "decryptionFailures": 0,
+        "routingFailures": 0,
+        "localAddress": "(redacted)",
+        "pacerDelay": 0,
+        "receiverReports": [],
+        "receiverBitrateEstimate": 0,
+        "outboundBitrateEstimate": 1211891,
+        "inboundBitrateEstimate": 0,
+        "packetsReceived": 285,
+        "packetsSent": 182,
+        "secureFramesProtocolVersion": 10,
+        "bytesReceived": 29866,
+        "bytesSent": 15768
+      },
+      "camera": null,
+      "clips": {
+        "buffers": [
+          {
+            "audioChannels": 0,
+            "dataType": "userAudio",
+            "key": "494866585052381195_userAudio",
+            "numFrames": 0,
+            "sampleRate": 0,
+            "savedKB": 0,
+            "userId": "494866585052381195"
+          }
+        ],
+        "clipDurationMs": 0,
+        "totalSavedKB": 0
+      },
+      "rtp": {
+        "inbound": {
+          "494866585052381195": [
+            {
+              "type": "audio",
+              "ssrc": 1002603,
+              "sinkWant": "100",
+              "sinkWantAsInt": 100,
+              "codec": {
+                "id": 120,
+                "name": "opus"
+              },
+              "bytesReceived": 23558,
+              "packetsReceived": 266,
+              "packetsLost": 0,
+              "fractionLost": null,
+              "fecPacketsReceived": 141,
+              "fecPacketsDiscarded": 139,
+              "audioLevel": 0,
+              "audioDetected": 0,
+              "jitter": 0,
+              "jitterBuffer": 1,
+              "jitterBufferPreferred": 20,
+              "decodingCNG": 0,
+              "decodingMutedOutput": 1013,
+              "decodingNormal": 534,
+              "decodingPLC": 18,
+              "decodingPLCCNG": 1021,
+              "accelerateRate": 0,
+              "expandRate": 100,
+              "preemptiveExpandRate": 0,
+              "speechExpandRate": 0,
+              "secondaryDecodedRate": 0,
+              "opSilence": 1113,
+              "opNormal": 408,
+              "opMerge": 2,
+              "opExpand": 2,
+              "opAccelerate": 24,
+              "opPreemptiveExpand": 24,
+              "opCNG": 0,
+              "delayEstimate": 72,
+              "passthroughCount": 0,
+              "decryptSuccessCount": 266,
+              "decryptFailureCount": 0,
+              "decryptDuration": 2030,
+              "decryptAttempts": 226,
+              "audioJitterBuffer": {
+                "last": 1,
+                "mean": 12,
+                "p75": 15,
+                "p95": 55,
+                "p99": 75,
+                "max": 73
+              },
+              "audioJitterDelay": {
+                "last": 72,
+                "mean": 74,
+                "p75": 75,
+                "p95": 95,
+                "p99": 140,
+                "max": 137
+              },
+              "audioJitterTarget": {
+                "last": 20,
+                "mean": 22,
+                "p75": 25,
+                "p95": 25,
+                "p99": 85,
+                "max": 80
+              },
+              "audioPlayoutUnderruns": {
+                "last": 0,
+                "mean": 0,
+                "p75": 0,
+                "p95": 0,
+                "p99": 0,
+                "max": 0
+              },
+              "relativeReceptionDelay": {
+                "last": 0,
+                "mean": 0,
+                "p75": 0,
+                "p95": 0,
+                "p99": 0,
+                "max": 0
+              },
+              "relativePlayoutDelay": {
+                "last": 0,
+                "mean": 0,
+                "p75": 0,
+                "p95": 0,
+                "p99": 0,
+                "max": 0
+              }
+            }
+          ]
+        },
+        "outbound": [
+          {
+            "type": "audio",
+            "ssrc": 1004207,
+            "sinkWant": "100",
+            "sinkWantAsInt": 100,
+            "codec": {
+              "id": 120,
+              "name": "opus"
+            },
+            "bytesSent": 11892,
+            "packetsSent": 175,
+            "packetsLost": 0,
+            "fractionLost": 0,
+            "audioLevel": 0.00006103515625,
+            "audioDetected": 0,
+            "framesCaptured": 1868,
+            "framesRendered": 1889,
+            "noiseCancellerProcessTime": 1207,
+            "voiceActivityDetectorProcessTime": 264,
+            "passthroughCount": 3,
+            "encryptSuccessCount": 192,
+            "encryptFailureCount": 0,
+            "encryptDuration": 1300,
+            "encryptAttempts": 192,
+            "encryptMaxAttempts": 1
+          }
+        ]
+      },
+      "context": "default",
+      "index": 0
+    }
+  ]
+]

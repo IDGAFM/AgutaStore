@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div class="footer">
+
+        <div class="footer-image">
+            <img id="footer-img" src="{% static 'image/FooterBG.png' %}" alt="">
+        </div>
+
+        <div class="footer-menu">
+                <!-- Элементы меню лого и тд -->
+                <div class="header-line">
+
+                        <a class="nav-item" href="catalog.html">МУЖСКОЕ</a>
+                        <a class="nav-item" href="catalog.html">ЖЕНСКОЕ</a>
+
+                    <div class="header-logo">
+                        <a href="index.html">
+                            <img id="logo-head" src="{% static 'image/logo.png' %}" alt="">
+                        </a>
+                    </div>
+
+                        <a class="nav-item" href="catalog.html">ЗАКАЗЫ</a>
+
+                    <div class="cart">
+                        <a href="#">
+                            <img src="{% static 'image/cart.png' %}" alt="">
+                        </a>
+                    </div>
+
+                    <div class="head-instagram">
+                        <a href="https://www.instagram.com/agutastore?igsh=Z293d2dsbWRmZDR5">
+                            <img id="img-insta" src="{% static 'image/instagram.png' %}" alt="">
+                        </a>
+                    </div>
+
+                    <div class="user">
+                        <a href="#">
+                            <img src="{% static 'image/User.png' %}" alt="">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="number">
+                    +7 (708) 289 32 46
+                </div>
+
+                <div class="email">
+                    diasoyazov@gmail.com
+                </div>
+
+                <div class="policy">
+                    <a id="policy-link" href="#">Политика конфиденциальности и Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="{% static 'js/catalog.js' %}"></script>
+</body>
+</html>

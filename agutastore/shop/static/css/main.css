@@ -1,0 +1,555 @@
+body{
+    margin: 0;
+    font-family: "Raleway", sans-serif;
+}
+
+.container{
+    margin: 0px 23%;
+}
+
+.header { 
+    position: relative;
+    background-image: url(../image/background-headers.png);
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 1;
+}
+
+.header-line {
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.nav-item {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 24px;
+    margin-right: 80px;
+
+    transition: color 0.3s linear;
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%; /* Изменено на 0 */
+    height: 2px;
+    background-color: #ffffff;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-item:hover::after {
+    transform: scaleX(1);
+}
+
+.header-logo { 
+    margin-right: 80px;
+    padding-top: 4px;
+}
+
+.cart { 
+    margin-right: 30px;
+}
+
+.head-instagram{
+    margin-right: 30px;
+}
+
+#img-insta{
+    padding-top: 10px;
+}
+
+.user { 
+    margin-right: 30px;
+}
+
+.header-title {
+    color: #fff;
+    font-size: 48px;
+    font-weight: bold;
+
+    text-align: center;
+    margin-top: 300px;
+    margin-bottom: 10px;
+}
+
+.header-subtitle { 
+    color: #fff;
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+
+}
+
+.card {
+    background-color: #000000;
+    width: 466px;
+    margin-left: auto;
+    align-items: flex-end;
+    margin-top: -80px;
+    position: relative;
+    z-index: 1;
+}
+
+.card-content {
+    display: flex;
+    align-items: center; 
+    margin-bottom: -10px;
+}
+
+.card-image {
+    margin-right: 10px; 
+    margin-left: 20px;
+}
+
+.card-image img {
+    max-width: 100%;
+}
+
+.card-text {
+    color: #fff;
+    text-align: center;
+    font-size: 24px;
+}
+
+.about-holder { 
+    display: flex;
+    margin-top: -80px;
+}
+
+.about-info { 
+    margin-left: 70px;
+    margin-top: 85px;
+}
+
+#about-text { 
+    color: #000000;
+    font-size: 28px;
+    text-align: left;
+}
+
+.novinki{
+    width: 100%;
+    height: 70px;
+    background-color: #000000;
+    margin-top: 90px;
+}
+
+.new { 
+    display: flex;
+    align-items: center;
+}
+
+.new-text {
+    color: #fff;
+    font-size: 48px;
+    margin-top: -40px;
+    font-weight: 700;
+}
+
+.new-img {
+    margin-top: -35px;
+    margin-left: 40px;
+}
+
+.karta-new {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 60px;
+
+}
+
+.karta-one {
+    margin-bottom: 40px;
+    margin-left: 40px;
+    width: 300px;
+    height: 400px;
+}
+
+.karta-one img {
+    width: 100%;
+    height: 85%;
+    object-fit: cover;
+}
+
+.karta-two {
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+
+.karta-three { 
+    margin-bottom: 20px;
+    margin-left: 40px;
+}
+
+.karta-four {
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+
+.karta-five { 
+    margin-left: 40px;
+    margin-bottom: 20px;
+}
+
+.karta-six {
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+
+.karta-tb {
+    display: flex;
+    position: relative;
+}
+
+.karta-title { 
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.karta-btn {
+    border: 1px solid;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #000;
+    padding: 6px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    bottom: 1; 
+    right: 0; 
+    transition: background-color 0.3s linear, color 0.2s linear;
+}
+
+.karta-btn:hover {
+    background-color: #000000;
+    color: #fff;
+}
+
+.karta-skidka {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.skidka-img {
+    width: 100%; 
+}
+
+.skidka-img img {
+    width: 100%; 
+}
+
+.skidka-title {
+    position: absolute;
+    top: 50%;
+    left: 66%;
+    font-size: 24px;
+    font-weight: normal;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    text-align: center;
+    color: #000000; 
+}
+
+.skidka-title span {
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.skidka-btn { 
+    background-color: #fff;
+    color: #000;
+    border: 1px solid;
+    border-radius: 6px;
+    padding: 10px 30px;
+    cursor: pointer;
+    font-family: "Raleway", sans-serif;
+    font-size: 22px;
+    transition: background-color 0.3s linear, color 0.2s linear;
+    margin-left: 35px;
+}
+
+.skidka-btn:hover {
+    background-color: #000000;
+    color: #fff;
+}
+
+.footer {
+    width: 100%;
+    margin-top: 100px;
+}
+
+.footer-image {
+    width: 100%;
+}
+
+#footer-img{
+    width: 100%;
+}
+
+.footer-menu {
+    background-color: #000000;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.97), rgba(0, 0, 0, 1)); 
+    margin-top: -10px;
+}
+
+.number {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.email {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.policy {
+    text-align: center;
+    margin-top: 100px;
+    padding-bottom: 30px;
+}
+
+#policy-link {
+    text-decoration: none;
+    color: #616161;
+}
+
+.burger-menu {
+    display: none;
+}
+
+.burger-slide {
+    z-index: 2;
+    position: fixed;
+      top: 0;
+    left: 0;
+    width: 60%; /* Изменено */
+    height: 100%; /* Изменено */
+    background-color: #000000;
+    padding: 20px;
+    border-radius: 10px;
+    opacity: 0; 
+    transform: translateX(-100%); 
+    transition: opacity 0.6s ease, transform 0.6s ease; 
+}
+
+.burger-slide.show {
+    opacity: 1; 
+    transform: translateX(0); 
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.nav-item-burger {
+    margin-top: 20px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 24px;
+    margin-right: 80px;
+    display: block;
+    transition: color 0.3s linear;
+}
+
+.block { 
+    display: block;
+}
+
+#burger {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+/* Адаптация начинается здесь!! */
+@media (max-width: 1500px) {
+
+.karta-one { 
+    margin: 10px auto;
+}
+
+.karta-two { 
+    margin: 10px auto;
+}
+
+.karta-three { 
+    margin: 10px auto;
+}
+
+.karta-four { 
+    margin: 10px auto;
+}
+
+.karta-five { 
+    margin: 10px auto;
+}
+
+.karta-six { 
+    margin: 10px auto;
+}
+
+.number {
+    margin-left: -93px;
+}
+
+.email {
+    margin-left: -93px;
+}
+
+}
+
+@media (max-width: 1200px) { 
+
+.about-img {
+    display: none;
+}
+
+.about-holder { 
+    margin: auto;
+}
+
+.about-info {
+    margin-left: 0px;
+}
+
+.number {
+    margin-left: -174px;
+}
+
+.email {
+    margin-left: -174px;
+}
+
+.card {
+    width: 405px;
+}
+
+}
+
+@media (max-width: 1000px) {
+
+.nav-item, .cart, .head-instagram, .user {
+    display: none;
+}
+
+.header-logo {
+    display: block;
+    margin: auto;
+
+}
+
+.header-line {
+    padding-top: 30px;
+}
+
+.burger-menu {
+    display: block;
+}
+
+.container {
+    margin: 0px 10%;
+}
+
+.number, .email {
+    margin: 10px auto;
+}
+
+.policy {
+    margin-top: 50px;
+}
+
+.card-text {
+    font-size: 20px;
+}
+
+.new-text {
+    font-size: 40px;
+    margin-top: -30px;
+}
+
+.new-img {
+    margin-top: -30px;
+}
+
+.about-text {
+    font-size: 20px;
+}
+
+.karta-title {
+    font-size: 22px;
+}
+
+.skidka-btn {
+    padding: 7px 22px;
+}
+
+.skidka-title {
+    left: 68%;
+}
+
+}
+
+@media (max-width: 500px) {
+
+.karta-img1, .karta-img2 {
+    width: 320px;
+    height: 520px;
+}
+
+.karta-title {
+    font-size: 16px;
+}
+
+.karta-btn {
+    padding: 7px 15px;
+    font-size: 18px;
+}
+
+.karta-skidka{
+    position: relative;
+}
+
+.skidka-title {
+    position: static;
+    font-size: 18px;
+    font-weight: normal;
+    padding: 10px;
+    text-align: center;
+    color: #000000; 
+    margin-left: 120px;
+    margin-top: 60px;
+}
+
+.skidka-title span {
+    font-weight: 700;
+}
+
+.skidka-btn {
+    padding: 7px 15px;
+    font-size: 18px;
+    margin-left: 15px;
+}
+
+}

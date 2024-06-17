@@ -1,0 +1,150 @@
+{% extends 'base-others.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/shoping-cart.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="nav-info">
+        Главная \ Корзина
+    </div>
+
+    {% if cart_empty %}
+    <div class="cart-none">
+        <h1>Здесь пусто!</h1>
+        <div class="buttons">
+            <a href="{% url 'home' %}">
+                <button id="complete-btn">Вернуться на главную страницу</button>
+            </a>
+        </div>
+    </div>
+    {% else %}
+    {% for item in cart_items %}
+    <div class="shop-product">
+        <div class="separator"></div>
+
+        <div class="product">
+            <div class="images">
+                <img src="{{ item.cloth.mainPoster.url }}" alt="{{ item.cloth.title }}">
+            </div>
+
+            <div class="button-close">
+                <form action="{% url 'remove_from_cart' item.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">&#x2715;</button>
+                </form>
+            </div>
+
+            <div class="product-info">
+                <div class="product-title">
+                    {{ item.cloth.title }}
+                </div>
+
+                <div class="size">
+                    Размер: {{ item.size }}
+                </div>
+
+                <div class="price">
+                    {{ item.cloth.price }}₸
+                </div>
+
+                <div class="price">
+                    Кол-во: {{ item.quantity }}
+                </div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+    </div>
+    {% endfor %}
+
+    <form id="address-form">
+        <div class="address">
+            <div class="city">
+                <p>Город</p>
+                <input type="text" placeholder="Введите город" name="city" required>
+            </div>
+            <div class="street">
+                <p>Улица</p>
+                <input type="text" placeholder="Введите улицу" name="street" required>
+            </div>
+            <div class="home">
+                <p>Дом, подъезд, квартира</p>
+                <input type="text" placeholder="Введите дом, подъезд, квартиру" name="home" required>
+            </div>
+            <div class="index">
+                <p>Почтовый индекс</p>
+                <input type="text" placeholder="Введите почтовый индекс" name="index" required>
+            </div>
+        </div>
+    </form>
+
+    <div class="btn-sum">
+        <div class="buttons">
+            <button id="complete-btn" onclick="openPopup()">Заказать</button>
+        </div>
+        <div class="sum">
+            <p>ИТОГО <br><span>{{ total_price }}₸</span></p>
+        </div>
+    </div>
+
+    <div id="popup" class="popup" style="display:none;">
+        <div class="popup-content">
+            <span class="close-popup" id="closePopup" onclick="closePopup()">&times;</span>
+            <h2>ДАННЫЕ КАРТЫ</h2>
+            <form id="addCardForm">
+                {% csrf_token %}
+                <div class="card-selection">
+                    <label for="saved-cards">Выберите карту:</label>
+                    <select id="saved-cards" name="saved_card" onchange="toggleCardForm(this.value)">
+                        <option value="new">Новая карта</option>
+                        {% if cards %}
+                            {% for card in cards %}
+                                <option value="{{ card.id }}" data-card-number="{{ card.card_number }}" data-expiry-date="{{ card.expiry_date }}" data-cvv="{{ card.cvv }}" data-card-holder="{{ card.card_holder }}">**** **** **** {{ card.card_number|slice:"-4" }} - {{ card.card_holder }}</option>
+                            {% endfor %}
+                        {% else %}
+                            <option disabled>Нет сохраненных карт</option>
+                        {% endif %}
+                    </select>
+
+                </div>
+                <div id="card-form">
+                    <div class="card-num">
+                        <p>Номер карты</p>
+                        <input type="text" name="card_number" required>
+                        <p id="card-type">Неизвестная карта</p>
+                    </div>
+                    <div class="center-block">
+                        <div class="date-card">
+                            <p>Срок действия</p>
+                            <input type="text" name="expiry_date" required>
+                        </div>
+                        <div class="cvv-card">
+                            <p>CCV \ CVV</p>
+                            <input type="text" name="cvv" required>
+                        </div>
+                    </div>
+                    <div class="card-holder">
+                        <p>Владелец карты</p>
+                        <input type="text" name="card_holder" required>
+                    </div>
+                    <div class="save-card">
+                        <input type="checkbox" id="save-card" name="save_card">
+                        <label for="save-card">Сохранить карту для будущих покупок</label>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button type="submit" id="complete-btn">Оплатить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/shoping-cart.js' %}"></script>
+{% endblock %}
